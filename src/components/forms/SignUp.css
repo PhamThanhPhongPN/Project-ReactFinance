@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.signup-page {
+    width: 1920px;
+    height: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../../assets/images/SignUpBg.png') no-repeat center center/cover;
+}
+
+.bg {
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+}
+
+.signup-box {
+    width: 448px;
+    height: 342px;
+    border-radius: 12px;
+    padding: 24px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    border: 0;
+}
+
+.text-box {
+    width: 182.17px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 19.38px;
+    font-family: 'Segoe UI Symbol', sans-serif;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-form {
+    width: 400px;
+    height: 214px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.signup-footer {
+    width: 193.93px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-input {
+    width: 400px;
+    height: 42px;
+    border: 1px solid #E5E7EB;
+    border-radius: 4px;
+    padding: 11px 14px 12px 9px;
+}
+
+.form-input::placeholder {
+    color: #9CA3AF;
+    font-size: 15.38px;
+    font-family: "Segoe UI Symbol", sans-serif;
+}
+
+.submit-btn {
+    width: 400px;
+    height: 40px;
+    background-color: #16A34A;
+    color: white;
+    padding: 12px 170.46px 12px 170.64px;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    line-height: 24px;
+    border: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.footer1 {
+    width: 127px;
+    height: 20px;
+    font-family: "Segoe UI Symbol",sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer2 {
+    width: 68.31px;
+    height: 14px;
+    margin-left: -3px;
+    color: #4F46E5;
+    font-family: "Roboto", sans-serif;
+    line-height: 20px;
+    font-size: 13.78px;
+    display: flex;
+    align-items: center;
+}
+
+.footer2:hover {
+    cursor: pointer;
+}
