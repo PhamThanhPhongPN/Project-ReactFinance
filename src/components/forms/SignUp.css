@@ -73,10 +73,26 @@
     padding: 11px 14px 12px 9px;
 }
 
+.form-input.error {
+    width: 400px;
+    height: 42px;
+    border: 1px solid #FF0004;
+    border-radius: 4px;
+    padding: 11px 14px 12px 9px;
+    position: relative;
+}
+
 .form-input::placeholder {
     color: #9CA3AF;
     font-size: 15.38px;
     font-family: "Segoe UI Symbol", sans-serif;
+}
+
+.form-input.error::placeholder {
+    color: #FF0004;
+    font-size: 15.38px;
+    font-family: "Segoe UI Symbol", sans-serif;
+    position: absolute;
 }
 
 .submit-btn {
@@ -119,4 +135,11 @@
 
 .footer2:hover {
     cursor: pointer;
+}
+
+.error-text {
+    color: #FF0000;
+    font-size: 14px;
+    line-height: auto;
+    font-family: "Robota", sans-serif;
 }
