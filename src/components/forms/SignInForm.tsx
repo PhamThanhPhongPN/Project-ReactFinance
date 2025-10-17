@@ -7,7 +7,7 @@ interface ErrorState {
   password: string;
 }
 
-export default function SignUp() {
+export default function SignInForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
