@@ -13,6 +13,7 @@
 }
 
 .admin-form {
+    border-radius: 6px;
     width: 546px;
     height: 562px;
     padding: 8px 0px 52px 0px;
@@ -44,7 +45,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 35px;
     margin-top: 57px;
 }
@@ -116,4 +116,20 @@
     line-height: 24px;
     font-size: 16px;
     color: #212529;
+    padding-left: 177px;
+}
+
+.admin-error-text {
+    display: flex;
+    gap: 0;
+    color: #FF0000;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    width: 410px;
+    height: 27px;
+    line-height: 27px;
+    padding: 0;
+    margin-top: -35px;  
+    margin-bottom: -27px;
+    padding-right: -50px ;
 }
