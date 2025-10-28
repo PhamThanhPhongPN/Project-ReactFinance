@@ -5,7 +5,20 @@ import unlock from "../../assets/images/unlock.png";
 import deactivate from "../../assets/images/deactivate.png";
 import lock from "../../assets/images/lock.png";
 
-export default function UserTable() {
+interface UserData {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  gender: string;
+  status: string;
+}
+
+interface UserTableProps {
+  data: UserData[];
+}
+
+export default function UserTable({ data }: UserTableProps) {
   return (
     <Table bordered hover size="sm" className="table">
       <thead>
@@ -20,51 +33,31 @@ export default function UserTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td className="stt">1</td>
-          <td>Nguyen Van A</td>
-          <td>nguyenvana@gmail.com</td>
-          <td>0987654321</td>
-          <td>Female</td>
-          <td><img src={active} alt="active" width="65px" height="22px" /></td>
-          <td><img src={unlock} alt="unlock" width="40px" height="40px"/></td>
-        </tr>
-        <tr>
-          <td className="stt">2</td>
-          <td>Pham Thi B</td>
-          <td>phamthib@gmail.com</td>
-          <td>0987654321</td>
-          <td>Male</td>
-          <td><img src={active} alt="deactivate" width="65px" height="22px" /></td>
-          <td><img src={lock} alt="lock" width="40px" height="40px"/></td>
-        </tr>
-        <tr>
-          <td className="stt">3</td>
-          <td>Pham Thi B</td>
-          <td>phamthib@gmail.com</td>
-          <td>0987654321</td>
-          <td>Male</td>
-          <td><img src={deactivate} alt="deactivate" width="90px" height="22px" /></td>
-          <td><img src={unlock} alt="lock" width="40px" height="40px"/></td>
-        </tr>
-        <tr>
-          <td className="stt">4</td>
-          <td>Pham Thi B</td>
-          <td>phamthib@gmail.com</td>
-          <td>0987654321</td>
-          <td>Male</td>
-          <td><img src={active} alt="deactivate" width="65px" height="22px" /></td>
-          <td><img src={unlock} alt="lock" width="40px" height="40px"/></td>
-        </tr>
-        <tr>
-          <td className="stt">5</td>
-          <td>Pham Thi B</td>
-          <td>phamthib@gmail.com</td>
-          <td>0987654321</td>
-          <td>Male</td>
-          <td><img src={deactivate} alt="deactivate" width="90px" height="22px" /></td>
-          <td><img src={lock} alt="lock" width="40px" height="40px"/></td>
-        </tr>
+        {data.map((user, index) => (
+          <tr key={user.id}>
+            <td className="stt">{user.id}</td>
+            <td>{user.name}</td>
+            <td>{user.email}</td>
+            <td>{user.phone}</td>
+            <td>{user.gender}</td>
+            <td>
+              <img 
+                src={user.status === 'active' ? active : deactivate} 
+                alt={user.status} 
+                width={user.status === 'active' ? "65px" : "90px"} 
+                height="22px" 
+              />
+            </td>
+            <td>
+              <img 
+                src={user.status === 'active' ? unlock : lock} 
+                alt="action" 
+                width="40px" 
+                height="40px"
+              />
+            </td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );
