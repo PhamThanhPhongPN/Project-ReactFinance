@@ -1,0 +1,60 @@
+.table {
+    margin-top: 49px;
+}
+
+.table thead th{
+    height: 44px;
+    background-color: whitesmoke !important;
+    color:grey;
+    font-weight: normal;
+    border: none !important;
+    border-bottom: 1px solid gainsboro !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.table .stt {
+    text-align: center;
+}
+
+.table thead th:nth-child(1) {
+    width: 77px;
+}
+
+.table thead th:nth-child(2) { 
+    width: 204px;
+}
+
+.table thead th:nth-child(3) {  
+    width: 305px;
+}
+
+.table thead th:nth-child(4) {  
+    width: 261px;
+}
+
+.table thead th:nth-child(5) {
+    width: 208px;
+}
+
+.table thead th:nth-child(6) {  
+    width: 179px;
+}
+
+.table thead th:nth-child(7) {  
+    width: 166px;
+}
+
+.table tbody td {
+    height: 72px;
+    border: none !important;
+    border-bottom: 1px solid gainsboro !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.active {
+    width: 65px;
+    height: 22px;
+    background-color: greenyellow;
+}

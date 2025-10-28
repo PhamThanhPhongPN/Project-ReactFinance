@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeDropDown from './HomeDropDown'
+import HomeDropDown from '../ui/HomeDropDown'
 import './HomeHeader.css'
 
 export default function HomeHeader() {

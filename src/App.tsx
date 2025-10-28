@@ -1,5 +1,5 @@
-import React from 'react'
 import RouterConfig from './RouterConfig'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   return (
