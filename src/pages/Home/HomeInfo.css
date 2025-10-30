@@ -1,0 +1,117 @@
+.info-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-money-container{
+    width: 768px;
+    height: 98px;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 23px;
+}
+
+.input-money-container p{
+    color: #6B7280;
+    font-family: "Roboto", sans-serif;
+    line-height: 20px;
+    font-size: 13.02px;
+    margin-top: 15px;
+}
+
+.input-money-container input {
+    width: 192px;
+    height: 42px;
+    border: 1px solid #DEE2E6;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-money-container button {
+    width: 75.7px;
+    height: 40px;
+    background-color: #3B82F6;
+    color: white;
+    border-radius: 6px;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-title {
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    line-height: 36px;
+    color: #4F46E5;
+    margin-top: 52px;
+}
+
+.info-showcase-container {
+    width: 768px;
+    height: 193px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 21px;
+}
+
+.info-showcase{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: flex-start;
+}
+
+.info-texts {
+    border: 0 !important;
+    font-size: 14px;
+    font-family: "Inter",sans-serif;
+    line-height: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.infos input {
+    width: 374px;
+    height: 44px;
+    background-color: #F5F5F5;
+    border: 1px solid #D0D5DD;
+    border-radius: 6px;
+    padding-left: 16px;
+}
+
+.info-change-button-container {
+    width: 768px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.info-change-btn {
+    width: 374px;
+    height: 40px;
+    border: 2px solid #4F46E5;
+    color: #4F46E5;
+    background-color: #F4F2FD;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
+}
