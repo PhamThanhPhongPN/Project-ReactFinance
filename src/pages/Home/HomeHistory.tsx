@@ -1,11 +1,11 @@
 import React from 'react'
 import HomeHeader from '../../components/common/HomeHeader'
-import info from "../../assets/images/info-active.png";
+import info from "../../assets/images/info.png";
 import cate from "../../assets/images/cate.png";
-import history from "../../assets/images/history.png";
-import FinancialSummary from '../../components/common/FinancialSummary';
+import history from "../../assets/images/history-active.png";
 import "./Home.css"
 import { useNavigate } from 'react-router-dom';
+import FinancialSummary from '../../components/common/FinancialSummary';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function Home() {
       <HomeHeader/>
       <div className='home-info-container'>
         <div className='home-info-nav'>
-          <div className='info-active'>
+          <div className='info' onClick={()=>navigate("/home-info")}>
             <img src={info} alt="info" width="20px" height="20px"/>
             Information
           </div>
@@ -22,7 +22,7 @@ export default function Home() {
             <img src={cate} alt="info" width="19px" height="20px"/>
             Category
           </div>
-          <div className='history' onClick={()=>navigate("/home-history")}>
+          <div className='history-active'>
             <img src={history} alt="info" width="22px" height="19px"/>
             History
           </div>

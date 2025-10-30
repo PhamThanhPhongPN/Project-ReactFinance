@@ -34,7 +34,7 @@ export default function HomeDropDown() {
   return (
     <Dropdown menu={{ items, onClick: handleLogOut }}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space>
+        <Space style={{color: "white"}}>
           Tài khoản
           <DownOutlined />
         </Space>

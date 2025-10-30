@@ -1,0 +1,95 @@
+.category-table{
+    margin-top: 82px;
+}
+
+.category-table thead th {
+    width: 44px;
+    background-color: whitesmoke !important;
+    color:grey;
+    font-weight: normal;
+    border: none !important;
+    border-bottom: 1px solid gainsboro !important;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.category-table thead th:nth-child(1) {
+    width: 77px;
+}
+
+.category-table thead th:nth-child(2) { 
+    width: 429px;
+}
+
+.category-table thead th:nth-child(3) {  
+    width: 268px;
+}
+
+.category-table thead th:nth-child(4) {  
+    width: 295px;
+}
+
+.category-table thead th:nth-child(5) {
+    width: 331px;
+}
+
+.category-table tbody td {
+    height: 72px;
+    border: none !important;
+    border-bottom: 1px solid gainsboro !important;
+    text-align: left;
+    vertical-align: middle;
+    background-color: white !important;
+}
+
+.category-action {
+    width: 123px;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.category-actions {
+    width: 142px;
+    height: 36px;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.edit-btn{
+    width: 54px;
+    height: 36px;
+    border: 0;
+    background-color: #FF9500;
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.block-btn{
+    width: 65px;
+    height: 36px;
+    border: 0;
+    background-color: #D95656;
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unblock-btn{
+    width: 84px;
+    height: 36px;
+    border: 0;
+    background-color: #56D96E;
+    color: white;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -4,7 +4,7 @@ import AdminSidebar from "../../components/common/AdminSidebar";
 import search from "../../assets/images/search.png";
 import UserTable from "../../components/user/UserTable";
 import UserPagination from "../../components/user/UserPagination";
-import "./AdminUser.css"
+import "./AdminPage.css"
 
 export default function AdminUser() {
   const [currentPage, setCurrentPage] = useState(1);

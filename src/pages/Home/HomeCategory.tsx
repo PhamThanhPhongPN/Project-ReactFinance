@@ -1,24 +1,25 @@
 import React from 'react'
 import HomeHeader from '../../components/common/HomeHeader'
-import info from "../../assets/images/info-active.png";
-import cate from "../../assets/images/cate.png";
+import info from "../../assets/images/info.png";
+import cate from "../../assets/images/cate-active.png";
 import history from "../../assets/images/history.png";
-import FinancialSummary from '../../components/common/FinancialSummary';
 import "./Home.css"
+import "./HomeCategory.css"
 import { useNavigate } from 'react-router-dom';
+import FinancialSummary from '../../components/common/FinancialSummary';
 
-export default function Home() {
+export default function HomeCategory() {
   const navigate = useNavigate();
   return (
     <div>
       <HomeHeader/>
       <div className='home-info-container'>
         <div className='home-info-nav'>
-          <div className='info-active'>
+          <div className='info' onClick={()=>navigate("/home-info")}>
             <img src={info} alt="info" width="20px" height="20px"/>
             Information
           </div>
-          <div className='cate' onClick={()=>navigate("/home-category")}>
+          <div className='cate-active'>
             <img src={cate} alt="info" width="19px" height="20px"/>
             Category
           </div>
