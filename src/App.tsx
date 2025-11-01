@@ -1,10 +1,23 @@
-import RouterConfig from './RouterConfig'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { store } from './stores/store';
+import RouterConfig from './RouterConfig';
+import { loadUserFromStorage } from './stores/slices/authSlice';
 
-export default function App() {
-  return (
-    <div>
-      <RouterConfig/>
-    </div>
-  )
+function AppContent() {
+  useEffect(() => {
+    store.dispatch(loadUserFromStorage());
+  }, []);
+
+  return <RouterConfig />;
 }
+
+function App() {
+  return (
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
+  );
+}
+
+export default App;

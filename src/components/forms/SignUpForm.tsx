@@ -1,6 +1,9 @@
-import { useState, type FormEvent, type ChangeEvent } from "react";
+import { useState, type FormEvent, type ChangeEvent, useEffect } from "react";
 import "./SignUp.css";
 import { useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../stores/hooks/useRedux";
+import { signUpThunk } from "../../stores/thunks/authThunk";
+import { clearError } from "../../stores/slices/authSlice";
 
 interface ErrorState {
   email: string;
@@ -10,17 +13,37 @@ interface ErrorState {
 
 export default function SignUpForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isLoading, error: apiError, isAuthenticated } = useAppSelector((state) => state.auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<ErrorState>({
     email: "",
     password: "",
     confirmPassword: "",
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  useEffect(() => {
+    if (isAuthenticated && isSuccess) {
+      const timer = setTimeout(() => {
+        if (confirm("Sign Up successful! Go to Sign In page?")) {
+          navigate("/sign-in");
+        }
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated, isSuccess, navigate]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     let valid = true;
@@ -57,13 +80,16 @@ export default function SignUpForm() {
     setErrors(newErrors);
 
     if (valid) {
-      setIsSuccess(true)
-      console.log("Sign up successful!");
-      if (confirm("Do you want to go to signIn page?") == true) {
-        navigate("/sign-in");
+      const result = await dispatch(signUpThunk({ email, password }));
+      
+      if (signUpThunk.fulfilled.match(result)) {
+        setIsSuccess(true);
+        console.log("Sign up successful!");
+      } else {
+        setIsSuccess(false);
       }
     } else {
-      setIsSuccess(false)
+      setIsSuccess(false);
     }
   };
 
@@ -74,9 +100,10 @@ export default function SignUpForm() {
 
   return (
     <div className="signup-page">
-      <div className={`signup-box ${hasAnyError ? "form-error" : ""}`}>
+      <div className={`signup-box ${hasAnyError || apiError ? "form-error" : ""}`}>
         <div className="text-box">Sign Up</div>
         {isSuccess && <p className="success-text">Sign Up Successfully</p>}
+        {apiError && <p className="error-text">{apiError}</p>}
 
         <form
           className={`signup-form ${hasAnyError ? "form-error" : ""}`}
@@ -91,6 +118,7 @@ export default function SignUpForm() {
             }
             className={`form-input ${errors.email ? "error" : ""}`}
             placeholder="Email here ..."
+            disabled={isLoading}
           />
           {errors.email && <p className="error-text">{errors.email}</p>}
 
@@ -103,6 +131,7 @@ export default function SignUpForm() {
             }
             className={`form-input ${errors.password ? "error" : ""}`}
             placeholder="Password here ..."
+            disabled={isLoading}
           />
           {errors.password && <p className="error-text">{errors.password}</p>}
 
@@ -115,13 +144,14 @@ export default function SignUpForm() {
             }
             className={`form-input ${errors.confirmPassword ? "error" : ""}`}
             placeholder="Confirm password here ..."
+            disabled={isLoading}
           />
           {errors.confirmPassword && (
             <p className="error-text">{errors.confirmPassword}</p>
           )}
 
-          <button className="submit-btn" type="submit">
-            Sign Up
+          <button className="submit-btn" type="submit" disabled={isLoading}>
+            {isLoading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
 

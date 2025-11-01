@@ -1,26 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdminNavbar from "../../components/common/AdminNavbar";
 import AdminSidebar from "../../components/common/AdminSidebar";
 import search from "../../assets/images/search.png";
 import UserTable from "../../components/user/UserTable";
 import UserPagination from "../../components/user/UserPagination";
-import "./AdminPage.css"
+import "./AdminPage.css";
+import { useAppDispatch, useAppSelector } from "../../stores/hooks/useRedux";
+import { fetchAllUsersThunk, toggleUserStatusThunk } from "../../stores/thunks/userThunks";
+import { UserStatus } from "../../types/user.type";
 
 export default function AdminUser() {
+  const dispatch = useAppDispatch();
+  const { users, isLoading, error } = useAppSelector((state: { userManagement: any; }) => state.userManagement);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const rowsPerPage = 4;
 
-  const userData = [
-    { id: 1, name: "Nguyen Van A", email: "nguyenvana@gmail.com", phone: "0987654321", gender: "Female", status: "active" },
-    { id: 2, name: "Pham Thi B", email: "phamthib@gmail.com", phone: "0987654321", gender: "Male", status: "active" },
-    { id: 3, name: "Pham Thi C", email: "phamthic@gmail.com", phone: "0987654321", gender: "Male", status: "deactivate" },
-    { id: 4, name: "Le Van D", email: "levand@gmail.com", phone: "0987654321", gender: "Male", status: "active" },
-    { id: 5, name: "Tran Thi E", email: "tranthie@gmail.com", phone: "0987654321", gender: "Female", status: "active" },
-  ];
+  useEffect(() => {
+    dispatch(fetchAllUsersThunk());
+  }, [dispatch]);
 
-  const filteredData = userData.filter(user => 
-    user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  const filteredData = users.filter((user: { fullName: string; email: string; phone: string | string[]; }) => 
+    user.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.phone.includes(searchQuery)
   );
@@ -34,12 +36,44 @@ export default function AdminUser() {
     setCurrentPage(1);
   };
 
+  const handleToggleStatus = async (userId: string, currentStatus: UserStatus) => {
+    if (confirm(`Are you sure you want to ${currentStatus === UserStatus.ACTIVE ? 'deactivate' : 'activate'} this user?`)) {
+      await dispatch(toggleUserStatusThunk({ userId, currentStatus }));
+    }
+  };
+
+  if (isLoading && users.length === 0) {
+    return (
+      <div>
+        <AdminNavbar />
+        <div className="body-container">
+          <AdminSidebar />
+          <div className="user-container">
+            <p>Loading users...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <AdminNavbar />
       <div className="body-container">
         <AdminSidebar />
         <div className="user-container">
+          {error && (
+            <div style={{ 
+              padding: '10px', 
+              background: '#ffebee', 
+              color: '#c62828', 
+              borderRadius: '4px',
+              marginBottom: '20px'
+            }}>
+              Error: {error}
+            </div>
+          )}
+          
           <div className="search-wrapper">
             <input
               type="text"
@@ -56,12 +90,24 @@ export default function AdminUser() {
               className="search-icon"
             />
           </div>
-          <UserTable data={currentData} />
-          <UserPagination 
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+
+          {currentData.length === 0 ? (
+            <p style={{ marginTop: '50px', textAlign: 'center', color: '#888' }}>
+              No users found
+            </p>
+          ) : (
+            <>
+              <UserTable 
+                data={currentData} 
+                onToggleStatus={handleToggleStatus}
+              />
+              <UserPagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
+            </>
+          )}
         </div>
       </div>
     </div>

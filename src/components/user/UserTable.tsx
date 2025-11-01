@@ -1,24 +1,17 @@
 import Table from "react-bootstrap/Table";
-import "./UserTable.css"
+import "./UserTable.css";
 import active from "../../assets/images/active.png";
 import unlock from "../../assets/images/unlock.png";
 import deactivate from "../../assets/images/deactivate.png";
 import lock from "../../assets/images/lock.png";
-
-interface UserData {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  gender: string;
-  status: string;
-}
+import { type User, UserStatus } from "../../types/user.type";
 
 interface UserTableProps {
-  data: UserData[];
+  data: User[];
+  onToggleStatus: (userId: string, currentStatus: UserStatus) => void;
 }
 
-export default function UserTable({ data }: UserTableProps) {
+export default function UserTable({ data, onToggleStatus }: UserTableProps) {
   return (
     <Table bordered hover size="sm" className="table">
       <thead>
@@ -35,25 +28,28 @@ export default function UserTable({ data }: UserTableProps) {
       <tbody>
         {data.map((user, index) => (
           <tr key={user.id}>
-            <td className="stt">{user.id}</td>
-            <td>{user.name}</td>
+            <td className="stt">{index + 1}</td>
+            <td>{user.fullName}</td>
             <td>{user.email}</td>
-            <td>{user.phone}</td>
-            <td>{user.gender}</td>
+            <td>{user.phone || "N/A"}</td>
+            <td>{user.gender ? "Male" : "Female"}</td>
             <td>
-              <img 
-                src={user.status === 'active' ? active : deactivate} 
-                alt={user.status} 
-                width={user.status === 'active' ? "65px" : "90px"} 
-                height="22px" 
+              <img
+                src={user.status === UserStatus.ACTIVE ? active : deactivate}
+                alt={user.status}
+                width={user.status === UserStatus.ACTIVE ? "65px" : "90px"}
+                height="22px"
               />
             </td>
             <td>
-              <img 
-                src={user.status === 'active' ? unlock : lock} 
-                alt="action" 
-                width="40px" 
+              <img
+                src={user.status === UserStatus.ACTIVE ? unlock : lock}
+                alt="toggle-status"
+                width="40px"
                 height="40px"
+                style={{ cursor: 'pointer' }}
+                onClick={() => onToggleStatus(user.id, user.status)}
+                title={user.status === UserStatus.ACTIVE ? "Deactivate" : "Activate"}
               />
             </td>
           </tr>

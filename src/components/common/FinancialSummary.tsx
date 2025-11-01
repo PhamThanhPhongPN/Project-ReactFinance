@@ -2,7 +2,10 @@ import { useState } from "react";
 import "./FinancialSummary.css";
 
 export default function FinancialSummary() {
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [selectedMonth, setSelectedMonth] = useState(
+    new Date().toISOString().slice(0, 7)
+  );
+
   return (
     <div className="financial-summary">
       <div className="summary-header">
@@ -17,9 +20,9 @@ export default function FinancialSummary() {
       <div className="summary-choose-month">
         <p>📅 Chọn tháng:</p>
         <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          type="month"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
         />
       </div>
     </div>

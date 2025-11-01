@@ -1,14 +1,54 @@
 {
-    "users" : [
-        {
-            "id": 1,
-            "fullName": "Pham Thanh Phong",
-            "email": "thanhphong@gmail.com",
-            "password": "123123",
-            "phone": "0901399573",
-            "gender": true,
-            "status": true,
-            "role": "ADMIN"
-        }
-    ]
+  "users": [
+    {
+      "id": "1",
+      "fullName": "Pham Thanh Phong",
+      "email": "thanhphong@gmail.com",
+      "password": "123123",
+      "phone": "0901399573",
+      "gender": true,
+      "status": true,
+      "role": "ADMIN"
+    },
+    {
+      "id": "d688",
+      "fullName": "Phong23",
+      "email": "thanhphong102006@gmail.com",
+      "password": "111111",
+      "phone": "0901399573",
+      "gender": false,
+      "status": true,
+      "role": "USER"
+    },
+    {
+      "id": "e337",
+      "fullName": "TungTung",
+      "email": "mtung3365@gmail.com",
+      "password": "123123",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "USER"
+    },
+    {
+      "id": "5ffd",
+      "fullName": "New User",
+      "email": "lethimai@gmail.com",
+      "password": "`12`12",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "USER"
+    },
+    {
+      "id": "60ce",
+      "fullName": "New User",
+      "email": "namtran94@phenikaa.com",
+      "password": "`12`12",
+      "phone": "",
+      "gender": true,
+      "status": true,
+      "role": "USER"
+    }
+  ]
 }

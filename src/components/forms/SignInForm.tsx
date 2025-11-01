@@ -1,6 +1,10 @@
-import { useState, type FormEvent, type ChangeEvent } from "react";
+import { useState, type FormEvent, type ChangeEvent, useEffect } from "react";
 import "./SignIn.css";
 import { useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../stores/hooks/useRedux";
+import { signInThunk } from "../../stores/thunks/authThunk";
+import { clearError } from "../../stores/slices/authSlice";
+import { UserRole } from "../../types/user.type";
 
 interface ErrorState {
   email: string;
@@ -9,15 +13,41 @@ interface ErrorState {
 
 export default function SignInForm() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isLoading, error: apiError, isAuthenticated, user } = useAppSelector((state) => state.auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errors, setErrors] = useState<ErrorState>({
     email: "",
     password: ""
   });
 
-  const handleSubmit = (e: FormEvent) => {
+  useEffect(() => {
+    if (isAuthenticated && user && isSuccess) {
+      const timer = setTimeout(() => {
+        if (user.role === UserRole.ADMIN) {
+          if (confirm("Sign In successful! Access the admin page?")) {
+            navigate("/admin-user");
+          }
+        } else {
+          if (confirm("Sign In successful! Access the home page?")) {
+            navigate("/");
+          }
+        }
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated, user, isSuccess, navigate]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearError());
+    };
+  }, [dispatch]);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     let valid = true;
@@ -45,13 +75,16 @@ export default function SignInForm() {
     setErrors(newErrors);
 
     if (valid) {
-      setIsSuccess(true)
-      console.log("Sign in successful!");
-      if (confirm("Sign In successful! Access the home page?") == true) {
-        navigate("/home");
+      const result = await dispatch(signInThunk({ email, password }));
+      
+      if (signInThunk.fulfilled.match(result)) {
+        setIsSuccess(true);
+        console.log("Sign in successful!");
+      } else {
+        setIsSuccess(false);
       }
     } else {
-      setIsSuccess(false)
+      setIsSuccess(false);
     }
   };
 
@@ -61,9 +94,10 @@ export default function SignInForm() {
 
   return (
     <div className="signin-page">
-      <div className={`signin-box ${hasAnyError ? "form-error" : ""}`}>
+      <div className={`signin-box ${hasAnyError || apiError ? "form-error" : ""}`}>
         <div className="text-box">🔐 Sign In</div>
         {isSuccess && <p className="success-text">Sign In Successfully</p>}
+        {apiError && <p className="error-text">{apiError}</p>}
 
         <form
           className={`signin-form ${hasAnyError ? "form-error" : ""}`}
@@ -78,6 +112,7 @@ export default function SignInForm() {
             }
             className={`form-input-in ${errors.email ? "error" : ""}`}
             placeholder="Email here ..."
+            disabled={isLoading}
           />
           {errors.email && <p className="error-text-in">{errors.email}</p>}
 
@@ -90,16 +125,17 @@ export default function SignInForm() {
             }
             className={`form-input-in ${errors.password ? "error" : ""}`}
             placeholder="Password here ..."
+            disabled={isLoading}
           />
           {errors.password && <p className="error-text-in">{errors.password}</p>}
 
-          <button className="submit-btn-in" type="submit">
-            Sign In
+          <button className="submit-btn-in" type="submit" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
         <div className="signin-footer">
-          <div className="footer3">{hasAnyError ? "Don't have account?" : "You dont't have account?"}</div>
+          <div className="footer3">{hasAnyError ? "Don't have account?" : "You don't have account?"}</div>
           <div className="footer4" onClick={() => {
             navigate("/sign-up")
           }}>Sign Up Now</div>
