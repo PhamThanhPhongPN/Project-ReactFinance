@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import AdminNavbar from "../../components/common/AdminNavbar";
 import AdminSidebar from "../../components/common/AdminSidebar";
 import CategoryTable from "../../components/category/CategoryTable";
@@ -5,24 +6,27 @@ import CategoryAddModal from "../../components/category/CategoryAddModal";
 import CategoryPagination from "../../components/category/CategoryPagination";
 import search from "../../assets/images/search.png";
 import "./AdminPage.css";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../stores/hooks/useRedux";
+import { fetchAllCategoriesThunk } from "../../stores/thunks/categoryThunks";
 
 export default function AdminCategory() {
+  const dispatch = useAppDispatch();
+  const { categories, isLoading, error, selectedCategory } = useAppSelector((state) => state.categoryManagement);
+  
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const rowsPerPage = 4;
 
-  const categoryData = [
-    { id: 1, name: "Tiền tích lũy", image: "", status: true },
-    { id: 2, name: "Tiền xăng", image: "", status: false },
-    { id: 3, name: "Tiền ăn", image: "", status: true },
-    { id: 4, name: "Tiền đi chơi", image: "", status: true },
-    { id: 5, name: "Tiền cho con", image: "", status: false },
-    { id: 6, name: "Tiền du phòng", image: "", status: true },
-    { id: 7, name: "Tiền sữa đỗ", image: "", status: true },
-    { id: 8, name: "Tiền cà phê", image: "", status: false },
-  ];
+  useEffect(() => {
+    dispatch(fetchAllCategoriesThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedCategory) {
+      setShowModal(true);
+    }
+  }, [selectedCategory]);
 
   const handleShow = () => {
     setShowModal(true);
@@ -32,7 +36,7 @@ export default function AdminCategory() {
     setShowModal(false);
   };
 
-  const filteredData = categoryData.filter(category => 
+  const filteredData = categories.filter(category => 
     category.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -44,6 +48,37 @@ export default function AdminCategory() {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
   };
+
+  if (isLoading && categories.length === 0) {
+    return (
+      <div>
+        <AdminNavbar />
+        <div className="body-container">
+          <AdminSidebar />
+          <div className="category-container">
+            <p>Loading categories...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && categories.length === 0) {
+    return (
+      <div>
+        <AdminNavbar />
+        <div className="body-container">
+          <AdminSidebar />
+          <div className="category-container">
+            <p>Error: {error}</p>
+            <button onClick={() => dispatch(fetchAllCategoriesThunk())}>
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
