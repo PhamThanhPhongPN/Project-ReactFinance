@@ -13,13 +13,13 @@ interface TransactionResponse {
 
 const convertToTransaction = (response: TransactionResponse): Transaction => {
   return {
-    id: response.id.toString(),
-    createDate: response.createDate,
-    total: response.total,
-    description: response.description,
-    categoryId: response.categoryId.toString(),
-    monthlyCategories: response.monthlyCategories.toString(),
-    userId: response.userId.toString(),
+    id: response.id?.toString() || '',
+    createDate: response.createDate || '',
+    total: response.total || 0,
+    description: response.description || '',
+    categoryId: response.categoryId?.toString() || '',
+    monthlyCategories: response.monthlyCategories?.toString() || '',
+    userId: response.userId?.toString() || '',
   };
 };
 
@@ -34,8 +34,13 @@ export const getTransactionsByUserAPI = async (userId: string) => {
 };
 
 export const getTransactionsByMonthlyBudgetAPI = async (monthlyBudgetId: string) => {
-  const response = await axiosInstance.get<TransactionResponse[]>(`/transactions?monthlyCategories=${monthlyBudgetId}`);
-  return response.data.map(convertToTransaction);
+  try {
+    const response = await axiosInstance.get<TransactionResponse[]>(`/transactions?monthlyCategories=${monthlyBudgetId}`);
+    return response.data.map(convertToTransaction);
+  } catch (error) {
+    console.error('Error fetching transactions:', error);
+    return [];
+  }
 };
 
 export const getTransactionByIdAPI = async (transactionId: string) => {

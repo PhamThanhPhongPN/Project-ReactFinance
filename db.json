@@ -111,7 +111,7 @@
     {
       "id": "e1e3",
       "month": "2025-11-30",
-      "balance": 123,
+      "balance": 1,
       "userId": null,
       "categories": []
     },
@@ -128,7 +128,30 @@
       "balance": 444454,
       "userId": null,
       "categories": []
+    },
+    {
+      "id": "aa6c",
+      "month": "2025-09-30",
+      "balance": 123,
+      "userId": null,
+      "categories": [
+        {
+          "id": 1762093532261,
+          "categoryId": 4,
+          "budget": 13123
+        }
+      ]
     }
   ],
-  "transactions": []
+  "transactions": [
+    {
+      "id": "b65f",
+      "createDate": "2025-11-02",
+      "total": 2131,
+      "description": "23",
+      "categoryId": 3,
+      "monthlyCategories": 673,
+      "userId": null
+    }
+  ]
 }
